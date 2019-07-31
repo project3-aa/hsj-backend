@@ -6,6 +6,7 @@ const mongoose    = require("mongoose");
 const ensureLogin = require("connect-ensure-login");
 
 // hey i changed this does it still work????
+//YES IT WORKS NOW DELETE ALL THIS
 
 // This maybe creates a new hop
 //***I have a feeling that we are going to have to change the skipID from the req.body to a params...... */
