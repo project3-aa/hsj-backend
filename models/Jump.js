@@ -20,6 +20,9 @@ const jumpSchema = new Schema(
     },
     description: {
       type: String
+    },
+    rating: {
+      type: Number
     }
   }
 )

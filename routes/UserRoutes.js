@@ -7,6 +7,7 @@ const passport    = require('passport');
 
 // Sign Up Route
 router.post('/signup', (req, res, next) => {
+    console.log(req.body)
   const userNameVar = req.body.username;
   const password = req.body.password;
 
@@ -94,6 +95,22 @@ router.post('/logout', (req, res, next) => {
   // req.logout() is defined by passport
   req.logout();
   res.status(200).json({ message: 'Log out success!' });
+});
+
+// ---------------------------------------------------------------------
+// getuser Route for the frontend
+
+router.get('/getcurrentuser', (req, res, next) => {
+    // req.isAuthenticated() is defined by passport
+    if (req.user) {
+        let newObject = {};
+        newObject.username = req.user.username;
+        newObject._id = req.user._id;
+
+        res.status(200).json(newObject);
+        return;
+    }
+    res.status(403).json({ message: 'Unauthorized' });
 });
 
 //-----------------------------------------------------------------------

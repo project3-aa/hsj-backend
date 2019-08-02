@@ -45,7 +45,8 @@ router.post("/newJump", (req, res, next) => {
     start: req.body.startCity,
     end: req.body.endCity,
     duration: req.body.jumpDuration,
-    description: req.body.jumpDescription
+    description: req.body.jumpDescription,
+    rating: req.body.jumpRating
   })
     .then(newJump => {
       res.json(newJump);
@@ -61,7 +62,8 @@ router.post("/updateJump/:id", (req, res, next) => {
     start: req.body.startCity,
     end: req.body.endCity,
     duration: req.body.jumpDuration,
-    description: req.body.jumpDescription
+    description: req.body.jumpDescription,
+    rating: req.body.jumpRating
   };
 
   Jump.findByIdAndUpdate(req.params.id, data, {new: true})
