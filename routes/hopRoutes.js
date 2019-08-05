@@ -11,7 +11,7 @@ const ensureLogin = require("connect-ensure-login");
 // This maybe creates a new hop
 //***I have a feeling that we are going to have to change the skipID from the req.body to a params...... */
 router.post('/newHop', (req,res,next)=>{
-  console.log("starting to create a new hop <<<<<<< ", req.body)
+  //  console.log("starting to create a new hop <<<<<<< ", req.body)
   let skipID = req.body.theSkip
   Hop.create({
     poi: req.body.theAttraction,
