@@ -20,7 +20,7 @@ router.get( '/allJumps', (req, res, next) => {
 router.get('/details/:jumpId', (req, res, next) => {
   Jump.findById(req.params.jumpId).populate('skip').populate({path: 'skip', populate: {path: 'hop'}})
   .then(jumpFromDB => {
-    console.log("this is the jump info with everything populated >>>>>>>>>>>>> ", jumpFromDB)
+    // console.log("this is the jump info with everything populated >>>>>>>>>>>>> ", jumpFromDB)
     res.status(200).json(jumpFromDB)
   }).catch(err => res.status(400).json(err))
 });
@@ -39,7 +39,7 @@ router.get('/userJumps/:userId', (req, res, next) => {
 });
 //this route will create a new Jump
 router.post("/newJump", (req, res, next) => {
-  console.log(req.body);
+  console.log('about to create a new jumppppppppppp',req.body);
   Jump.create({
     ownerId: req.user._id,
     start: req.body.startCity,
