@@ -36,12 +36,13 @@ router.post("/newHop", async (req, res, next) => {
 
 // This lets you edit a Hop
 router.post("/updateHop/:id", (req, res, next) => {
+  console.log(req.body);
   Hop.findByIdAndUpdate(
     req.params.id,
     {
-      poi: req.body.theAttraction,
-      arrivedBy: req.body.theMot,
-      description: req.body.hopDescription
+      poi: req.body.poi,
+      arrivedBy: req.body.arrivedBy,
+      description: req.body.description,
     },
     { new: true }
   )
