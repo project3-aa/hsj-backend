@@ -1,6 +1,7 @@
 const express     = require("express");
 const router      = express.Router();
 const Jump        = require("../models/Jump");
+const uploadMagic = require('../config/cloudinary');
 const mongoose    = require("mongoose");
 const ensureLogin = require("connect-ensure-login");
 
@@ -37,36 +38,59 @@ router.get('/userJumps/:userId', (req, res, next) => {
       res.json(err)
    });
 });
+
 //this route will create a new Jump
-router.post("/newJump", (req, res, next) => {
-  console.log('about to create a new jumppppppppppp',req.body);
+router.post("/newJump", uploadMagic.single('theImageParameter'), (req, res, next) => {
+
+  let theImage;
+
+  // console.log(req.file.url)
+  if(req.file){
+    theImage = req.file.url
+  } else{
+    theImage = 'http://getwallpapers.com/wallpaper/full/e/1/2/41252.jpg'
+  }
   Jump.create({
     ownerId: req.user._id,
     start: req.body.startCity,
     end: req.body.endCity,
     duration: req.body.jumpDuration,
     description: req.body.jumpDescription,
-    rating: req.body.jumpRating
+    rating: req.body.jumpRating,
+    image: theImage,
   })
     .then(newJump => {
+      console.log()
       res.json(newJump);
     })
     .catch(err => {
+      console.log("We hit an error")
       res.json(err);
     }); 
 });
+
 //this route will update any data in an existing Jump
-router.post("/updateJump/:id", (req, res, next) => {
+router.post("/updateJump/:id", uploadMagic.single('theImageParameter'), (req, res, next) => {
+   
+  let theUpdate= {};
+  theUpdate.start = req.body.startCity;
+  theUpdate.end = req.body.endCity;
+  theUpdate.duration = req.body.jumpDuration;
+  theUpdate.description = req.body.jumpDescription;
 
-  const data = {
-    start: req.body.startCity,
-    end: req.body.endCity,
-    duration: req.body.jumpDuration,
-    description: req.body.jumpDescription,
-    rating: req.body.jumpRating
-  };
+  if(req.file){
+    theUpdate.image = req.file.url
+  }
 
-  Jump.findByIdAndUpdate(req.params.id, data, {new: true})
+  // const data = {
+  //   start: req.body.startCity,
+  //   end: req.body.endCity,
+  //   duration: req.body.jumpDuration,
+  //   description: req.body.jumpDescription,
+  //   rating: req.body.jumpRating
+  // };
+
+  Jump.findByIdAndUpdate(req.params.id, theUpdate, {new: true})
     .then((response) => {
       res.json(response)
     })
