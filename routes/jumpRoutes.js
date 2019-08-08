@@ -49,7 +49,8 @@ router.post("/newJump", uploadMagic.single('theImageParameter'), (req, res, next
     theImage = req.file.url
   } else{
     theImage = 'http://getwallpapers.com/wallpaper/full/e/1/2/41252.jpg'
-  }
+  } 
+
   Jump.create({
     ownerId: req.user._id,
     start: req.body.startCity,
